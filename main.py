@@ -31,10 +31,10 @@ async def test(ctx, arg): #создаем асинхронную фунцию б
 async def wiki(ctx, *arg): #создаем асинхронную фунцию бота
     try:
         answer = wikipedia.summary(f"{arg}")
-    except wikipedia.exceptions.DisambiguationError:
-        answer = "Много статьей могут относитсься к твоему сообщению. Напиши точнее."
     except wikipedia.exceptions.PageError:
         answer = "Увы, но на Википедии такой статьи нет. Попробуй еще раз!"
+    except wikipedia.exception.Exeption:
+        answer = "Sorry..."
     await ctx.send(answer) #отправляем обратно аргумент
 
 
