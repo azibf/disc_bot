@@ -4,6 +4,10 @@ import requests
 from random import randint
 from discord.ext import commands
 from discord import opus
+import requests
+from bs4 import BeautifulSoup as bs
+import random
+import lxml.html
 
 TOKEN = 'NzExOTA4MjEwOTM1NzI2MjEy.XsJ2lA.Ci_TU57O7eP7MdnoL7fVqk_GCI4'
 bot = commands.Bot(command_prefix='!') #инициализируем бота с префиксом '!'
@@ -26,6 +30,24 @@ async def random(ctx, type='6'): #создаем асинхронную фунц
 async def test(ctx, arg): #создаем асинхронную фунцию бота
     await ctx.send(arg) #отправляем обратно аргумент
 
+@bot.command(pass_context=True) #разрешаем передавать агрументы
+async def mem(ctx, *arg): #создаем асинхронную фунцию бота
+    search = 'мем' + ' '.join([*arg])
+    try:
+        r = requests.get("https://www.google.ru/search?tbm=isch&q=" + search)
+        text = r.text
+        soup = bs(text, "html.parser")
+        img = soup.find_all('img')[2].get('src')
+        await ctx.send(img)  # отправляем обратно аргумент
+        with open('newfile.jpg', 'wb') as answer:
+            a = requests.get(img)
+            answer.write(a.content)
+            answer = discord.File(answer)
+            await ctx.send(file=answer)  # отправляем обратно аргумент
+    except Exception:
+        answer = "Sorry..."
+        await ctx.send(answer) #отправляем обратно аргумент
+
 
 @bot.command(pass_context=True) #разрешаем передавать агрументы
 async def wiki(ctx, *arg): #создаем асинхронную фунцию бота
@@ -33,7 +55,7 @@ async def wiki(ctx, *arg): #создаем асинхронную фунцию �
         answer = wikipedia.summary(f"{arg}")
     except wikipedia.exceptions.PageError:
         answer = "Увы, но на Википедии такой статьи нет. Попробуй еще раз!"
-    except wikipedia.exception.Exeption:
+    except wikipedia.exception.Exception:
         answer = "Sorry..."
     await ctx.send(answer) #отправляем обратно аргумент
 
