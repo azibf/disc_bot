@@ -34,16 +34,10 @@ async def test(ctx, arg): #создаем асинхронную фунцию б
 async def mem(ctx, *arg): #создаем асинхронную фунцию бота
     search = 'мем' + ' '.join([*arg])
     try:
-        r = requests.get("https://www.google.ru/search?tbm=isch&q=" + search)
-        text = r.text
-        soup = bs(text, "html.parser")
-        img = soup.find_all('img')[2].get('src')
-        await ctx.send(img)  # отправляем обратно аргумент
-        with open('newfile.jpg', 'wb') as answer:
-            a = requests.get(img)
-            answer.write(a.content)
-            answer = discord.File(answer)
-            await ctx.send(file=answer)  # отправляем обратно аргумент
+        response = requests.get("https://www.google.ru/search?tbm=isch&q=" + search)
+        soup = bs(response.text, "html.parser")
+        answer = soup.find_all('img')[1].get('src')
+        await ctx.send(answer)  # отправляем обратно аргумент
     except Exception:
         answer = "Sorry..."
         await ctx.send(answer) #отправляем обратно аргумент
