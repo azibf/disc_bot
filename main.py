@@ -9,16 +9,15 @@ from bs4 import BeautifulSoup as bs
 import random
 import lxml.html
 
-TOKEN = 'NzExOTA4MjEwOTM1NzI2MjEy.XsJ2lA.Ci_TU57O7eP7MdnoL7fVqk_GCI4'
+TOKEN = '***'
 bot = commands.Bot(command_prefix='!')
 YOUTUBE_API = 'AIzaSyBUg6SK6IEbAXu_zmVAa2SIS2aRMJukt4I'
 wikipedia.set_lang('ru')
 KEY = 'trnsl.1.1.20200518T133822Z.481fcb2b53d946a1.da23af2a80758568e5e74bf20c735509e234a0d5'
-URL = "https://translate.yandex.net/api/v1.5/tr.json/translate" #это адрес для обращения к API
+URL = "https://translate.yandex.net/api/v1.5/tr.json/translate" 
 
-
-@bot.command(pass_context=True) #разрешаем передавать агрументы
-async def random(ctx, type='6'): #создаем асинхронную фунцию бота
+@bot.command(pass_context=True) 
+async def random(ctx, type='6'): 
     try:
         answer = randint(0, int(type))
     except Exception:
